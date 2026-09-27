@@ -1,0 +1,21 @@
+# Managed by repokeeper (https://github.com/vannt-dev/repokeeper). Edits are reported by `repokeeper check`. Keys and jobs you add yourself are left alone.
+
+name: ci
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  commits:
+    uses: vannt-dev/repokeeper/.github/workflows/commitlint.yml@v0
+  dart:
+    uses: vannt-dev/repokeeper/.github/workflows/stack-dart.yml@v0
+    with:
+      sdk-versions: '["stable"]'
+      os: '["ubuntu-latest"]'
+      flutter: "false"
+      install-command: dart pub get
+      commands: '["dart format --output=none --set-exit-if-changed .","dart analyze","dart test"]'
