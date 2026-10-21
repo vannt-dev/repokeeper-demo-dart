@@ -13,19 +13,19 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   commits:
-    uses: vannt-dev/repokeeper/.github/workflows/commitlint.yml@v0
+    uses: vannt-dev/repokeeper/.github/workflows/commitlint.yml@ci/ubuntu-26-trial
   dart:
     needs: changes
     if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
     uses: vannt-dev/repokeeper/.github/workflows/stack-dart.yml@v0
     with:
       sdk-versions: '["stable"]'
-      os: '["ubuntu-latest"]'
+      os: '["ubuntu-26.04"]'
       flutter: "false"
       install-command: dart pub get
       commands: '["dart format --output=none --set-exit-if-changed .","dart analyze","dart test"]'
   changes:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       pull-requests: read
     outputs:
